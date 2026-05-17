@@ -12,14 +12,11 @@ function Navbar() {
         <img
           src={logo}
           alt="Phoenix Computers Logo"
-          className="h-11 w-11 object-contain rounded-full bg-white p-1 shadow"
+          className="h-15 w-15 object-contain rounded-full bg-white p-1 shadow"
         />
         <div className="flex flex-col leading-tight">
-          <span className="text-white font-black text-base tracking-wide">
+          <span className="text-white font-black text-xl md:text-3xl tracking-wide">
             Phoenix Computers
-          </span>
-          <span className="text-blue-300 text-xs tracking-widest uppercase">
-            Your Tech Partner
           </span>
         </div>
       </div>

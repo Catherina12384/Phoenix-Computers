@@ -4,11 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49efb6c4-e093-40d2-97d0-392f0d24f5a3" name="Changes" comment="" />
+    <list default="true" id="49efb6c4-e093-40d2-97d0-392f0d24f5a3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/cctv.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/desktop.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/headset.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/keyboard.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/laptop.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/mouse.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/printer.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/router.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Home.jsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -22,6 +38,9 @@
   &quot;associatedIndex&quot;: 4
 }</component>
   <component name="ProjectId" id="3DqwxhlFOQmQZO3bAW1R15qyPXH" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -31,11 +50,16 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "git-widget-placeholder": "frontend",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "E:/phoenixcomputers/frontend/src/assets",
     "settings.editor.selected.configurable": "preferences.editor"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\phoenixcomputers\frontend\src\assets" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\phoenixcomputers\frontend\src\assets" />
     </key>
