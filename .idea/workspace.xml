@@ -5,18 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49efb6c4-e093-40d2-97d0-392f0d24f5a3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/cctv.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/desktop.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/headset.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/keyboard.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/laptop.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/mouse.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/printer.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/router.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/moon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/sun.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/whatsapp.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/favicon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/icons.svg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Navbar.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Home.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/tailwind.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,9 +58,11 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\phoenixcomputers\frontend\src\assets" />
+      <recent name="E:\phoenixcomputers\frontend\public" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\phoenixcomputers\frontend\src\assets" />
+      <recent name="E:\phoenixcomputers\frontend\public" />
     </key>
   </component>
   <component name="TaskManager">
@@ -73,5 +74,16 @@
       <updated>1779023159551</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

@@ -1,5 +1,9 @@
 import { useTheme } from "../context/ThemeContext";
 import logo from "../assets/logo.png";
+import chatGif from "../assets/whatsapp.png";
+import SunIcon from "../assets/sun.png";
+import MoonIcon from "../assets/moon.png";
+
 
 function Navbar() {
   const { isDark, toggleTheme } = useTheme();
@@ -23,19 +27,35 @@ function Navbar() {
 
       {/* Right side */}
       <div className="flex items-center gap-5">
-        <a href="#catalogue" className="text-blue-200 hover:text-white text-sm font-medium transition hidden sm:block">
+        <a
+          href="#"
+          className="relative text-blue-200 hover:text-white text-base font-medium transition hidden sm:block
+            after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white
+            hover:after:w-full after:transition-all after:duration-300"
+        >
+            Home
+        </a>
+        <a href="#catalogue" className="relative text-blue-200 hover:text-white text-base font-medium transition hidden sm:block
+           after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white
+           hover:after:w-full after:transition-all after:duration-300">
           Catalogue
         </a>
-        <a href="#contact" className="text-blue-200 hover:text-white text-sm font-medium transition hidden sm:block">
+        <a href="#contact" className="relative text-blue-200 hover:text-white text-base font-medium transition hidden sm:block
+          after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white
+          hover:after:w-full after:transition-all after:duration-300">
           Contact
         </a>
         <a
           href="https://wa.me/919500288164?text=Hi!%20I%20have%20an%20enquiry."
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden sm:flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-4 py-1.5 rounded-full transition"
+          className="flex items-center transition" // removed 'hidden sm:' for testing
         >
-          💬 WhatsApp
+          <img
+            src={chatGif}
+            alt="Chat Icon"
+            className="h-8 w-8 object-contain animate-pulse"
+          />
         </a>
 
         {/* Theme Toggle */}
@@ -45,7 +65,14 @@ function Navbar() {
           title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
           aria-label="Toggle theme"
         >
-          {isDark ? "☀️" : "🌙"}
+          <img
+            src={isDark ? SunIcon : MoonIcon}
+            alt={isDark ? "Light Mode" : "Dark Mode"}
+            className={`h-6 w-6 object-contain transition-transform duration-500 ${
+              isDark ? "rotate-180 scale-110" : "rotate-0 scale-100"
+            }`}
+          />
+
         </button>
       </div>
     </nav>

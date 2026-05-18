@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import logo from "../assets/logo.png";
 import laptop from "../assets/laptop.png";
 import mouse from "../assets/mouse.png";
@@ -11,26 +11,76 @@ import printer from "../assets/printer.png";
 import projector from "../assets/projector.png";
 
 const carouselItems = [
-  { label: "Laptop",     img: laptop },
-  { label: "Desktop",    img: desktop },
-  { label: "CCTV",       img: cctv },
-  { label: "Mouse",      img: mouse },
-  { label: "Keyboard",   img: keyboard },
-  { label: "Printer",    img: printer },
-  { label: "Router",     img: router },
-  { label: "Headset",    img: headset },
-  { label: "Projector",  img: projector },
+  { label: "Laptop",    img: laptop },
+  { label: "Desktop",   img: desktop },
+  { label: "CCTV",      img: cctv },
+  { label: "Mouse",     img: mouse },
+  { label: "Keyboard",  img: keyboard },
+  { label: "Printer",   img: printer },
+  { label: "Router",    img: router },
+  { label: "Headset",   img: headset },
+  { label: "Projector", img: projector },
 ];
 
-const categories = [
-  { icon: "💻", label: "Laptops" },
-  { icon: "🖥️", label: "Desktops" },
-  { icon: "📷", label: "CCTV" },
-  { icon: "🖨️", label: "Printers" },
-  { icon: "🔌", label: "Accessories" },
-  { icon: "🌐", label: "Networking" },
-  { icon: "🖱️", label: "Peripherals" },
-  { icon: "🔋", label: "Consumables" },
+// Monochrome SVG icons for each category
+const icons = {
+  Laptops: (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+      <path d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h16a2 2 0 002-2V7a2 2 0 00-2-2H4zm0 2h16v8H4V7zM2 19h20v1a1 1 0 01-1 1H3a1 1 0 01-1-1v-1z"/>
+    </svg>
+  ),
+  Desktops: (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+      <path d="M2 3a1 1 0 011-1h18a1 1 0 011 1v13a1 1 0 01-1 1H3a1 1 0 01-1-1V3zm2 1v11h16V4H4zm5 13v2H7v1h10v-1h-2v-2H9z"/>
+    </svg>
+  ),
+  CCTV: (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+      <path d="M2 6a1 1 0 011-1h1V4h2v1h1a1 1 0 011 1v1l8-2v10l-8-2v1a1 1 0 01-1 1H3a1 1 0 01-1-1V6zm2 1v6h3V7H4zm12 7.27V9.73l-6 1.5v.54l6 1.5zM19 8h1a2 2 0 012 2v4a2 2 0 01-2 2h-1V8zM5 19h2v1H5v-1zm4 0h2v1H9v-1z"/>
+    </svg>
+  ),
+  Printers: (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+      <path d="M7 2h10v4H7V2zM4 7a1 1 0 00-1 1v7a1 1 0 001 1h1v3a1 1 0 001 1h12a1 1 0 001-1v-3h1a1 1 0 001-1V8a1 1 0 00-1-1H4zm3 9h10v4H7v-4zm-1-3h1v-1H6v1zm2 0h1v-1H8v1z"/>
+    </svg>
+  ),
+  Accessories: (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+      <path d="M12 1a5 5 0 015 5v1h1a2 2 0 012 2v8a2 2 0 01-2 2H6a2 2 0 01-2-2V9a2 2 0 012-2h1V6a5 5 0 015-5zm0 2a3 3 0 00-3 3v1h6V6a3 3 0 00-3-3zm-1 9a1 1 0 102 0 1 1 0 00-2 0z"/>
+    </svg>
+  ),
+  Networking: (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93s3.06-7.44 7-7.93v15.86zm2 0V4.07c3.94.49 7 3.85 7 7.93s-3.06 7.44-7 7.93z"/>
+    </svg>
+  ),
+  Peripherals: (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+      <path d="M4 5a2 2 0 012-2h12a2 2 0 012 2v3H4V5zm0 5h16v9a2 2 0 01-2 2H6a2 2 0 01-2-2v-9zm3 2v2h2v-2H7zm4 0v2h2v-2h-2zm4 0v2h2v-2h-2zm-8 4v2h2v-2H7zm4 0v2h6v-2h-6z"/>
+    </svg>
+  ),
+  Consumables: (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+      <path d="M6 3a2 2 0 00-2 2v14a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H6zm2 4h8v2H8V7zm0 4h8v2H8v-2zm0 4h5v2H8v-2zm8 0a2 2 0 110 4 2 2 0 010-4z"/>
+    </svg>
+  ),
+  Services: (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+      <path d="M12 2a5 5 0 015 5c0 1.65-.8 3.1-2 4.03V13l3 2-1 2-2-1.33V17a3 3 0 01-3 3 3 3 0 01-3-3v-1.33L7 17l-1-2 3-2v-1.97A5 5 0 0112 2zm0 2a3 3 0 100 6 3 3 0 000-6z"/>
+    </svg>
+  ),
+};
+
+const navItems = [
+  { label: "Laptops",      id: "laptops",      icon: icons.Laptops },
+  { label: "Desktops",     id: "desktops",     icon: icons.Desktops },
+  { label: "CCTV",         id: "cctv",         icon: icons.CCTV },
+  { label: "Printers",     id: "printers",     icon: icons.Printers },
+  { label: "Accessories",  id: "accessories",  icon: icons.Accessories },
+  { label: "Networking",   id: "networking",   icon: icons.Networking },
+  { label: "Peripherals",  id: "peripherals",  icon: icons.Peripherals },
+  { label: "Consumables",  id: "consumables",  icon: icons.Consumables },
+  { label: "Services",     id: "service",      icon: icons.Services },
 ];
 
 const whatsappNumber = "919500288164";
@@ -45,13 +95,8 @@ function ProductCarousel() {
     return () => clearInterval(timer);
   }, []);
 
-  const prev = () => setCurrent((c) => (c - 1 + carouselItems.length) % carouselItems.length);
-  const next = () => setCurrent((c) => (c + 1) % carouselItems.length);
-
   return (
     <div className="relative w-full md:w-1/2 overflow-hidden flex items-center justify-center">
-
-      {/* Images — full bleed, no border, no card */}
       {carouselItems.map((item, i) => (
         <img
           key={i}
@@ -66,18 +111,76 @@ function ProductCarousel() {
   );
 }
 
+// Floating bottom scrollable pill nav
+function BottomNav() {
+  const [active, setActive] = useState("laptops");
+  const scrollRef = useRef(null);
+
+  const handleClick = (id) => {
+    setActive(id);
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  return (
+    <div className="fixed bottom-5 left-0 right-0 z-50 flex justify-center pointer-events-none px-4">
+      <div
+        className="pointer-events-auto flex items-center gap-1 px-3 py-2 rounded-full shadow-2xl overflow-x-auto max-w-[95vw]"
+        ref={scrollRef}
+        style={{
+          background: "rgba(255,255,255,0.92)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
+          boxShadow: "0 8px 32px rgba(0,0,36,0.18), 0 1.5px 6px rgba(0,0,0,0.10)",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}
+      >
+        {navItems.map((item) => {
+          const isActive = active === item.id;
+          return (
+            <button
+              key={item.id}
+              onClick={() => handleClick(item.id)}
+              className="flex flex-col items-center justify-center flex-shrink-0 transition-all duration-300 rounded-full px-3 py-1.5 gap-1"
+              style={{
+                background: isActive ? "#1a2bbd" : "transparent",
+                color: isActive ? "#fff" : "#374151",
+                minWidth: 60,
+              }}
+            >
+              <span style={{ color: isActive ? "#fff" : "#1a2bbd" }}>
+                {item.icon}
+              </span>
+              <span
+                className="text-[10px] font-semibold whitespace-nowrap"
+                style={{ color: isActive ? "#fff" : "#374151" }}
+              >
+                {item.label}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function Home() {
   const whatsappLink = (msg) =>
     `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`;
 
   return (
-    <main className="min-h-screen bg-white dark:bg-dark-bg transition-colors duration-300">
+    <main className="min-h-screen bg-white dark:bg-dark-bg transition-colors duration-300 pb-24">
 
-      {/* ── HERO ── */}
-      <section className="relative bg-primary dark:bg-dark-nav overflow-hidden">
+      {/* ── HERO + CATEGORY BAR — unified blue block ── */}
+      <section className="bg-primary dark:bg-dark-nav overflow-hidden">
+
+        {/* Hero */}
         <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row items-stretch min-h-[420px]">
-
-          {/* Left — text (padded) */}
+          {/* Left — text */}
           <div className="flex-1 flex flex-col justify-center px-10 py-16">
             <p className="text-blue-300 uppercase tracking-widest text-xs font-semibold mb-4">
               Est. 2002 · Tuticorin, India
@@ -114,27 +217,8 @@ function Home() {
             </div>
           </div>
 
-          {/* Right — full bleed carousel, no gap, flush to edge */}
+          {/* Right — carousel */}
           <ProductCarousel />
-
-        </div>
-      </section>
-
-      {/* ── CATEGORY ICON BAR ── */}
-      <section className="bg-white dark:bg-dark-card border-b border-gray-100 dark:border-blue-900 shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-1 overflow-x-auto">
-          {categories.map((cat) => (
-            <a
-              key={cat.label}
-              href={`#${cat.label.toLowerCase()}`}
-              className="flex flex-col items-center gap-1 px-5 py-2 rounded-xl hover:bg-gray-50 dark:hover:bg-dark-bg transition group flex-shrink-0"
-            >
-              <span className="text-2xl">{cat.icon}</span>
-              <span className="text-xs font-medium text-gray-500 dark:text-gray-400 group-hover:text-primary dark:group-hover:text-blue-300 transition whitespace-nowrap">
-                {cat.label}
-              </span>
-            </a>
-          ))}
         </div>
       </section>
 
@@ -149,14 +233,14 @@ function Home() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {[
-            { icon: "💻", title: "Laptops & Desktops",       desc: "New, refurbished, and custom-built systems for home and business.",    id: "laptops"     },
-            { icon: "📷", title: "CCTV Systems",             desc: "Complete surveillance solutions — supply, installation & support.",    id: "cctv"        },
-            { icon: "🖨️", title: "Printer Services",         desc: "Printer repair, head reconditioning & laser toner refillings.",       id: "printers"    },
-            { icon: "🔌", title: "Accessories & Consumables",desc: "Cables, cartridges, ink, and everything your setup needs.",           id: "accessories" },
-            { icon: "🌐", title: "Networking",               desc: "Routers, switches, structured cabling and network setup.",            id: "networking"  },
-            { icon: "🖱️", title: "Peripherals",              desc: "Keyboards, mice, monitors, headsets and more.",                      id: "peripherals" },
-            { icon: "🔋", title: "Ink & Toner Refilling",    desc: "On-site refilling park for laser toner and ink cartridges.",         id: "refilling"   },
-            { icon: "🛠️", title: "Repairs & Service",        desc: "Hardware diagnostics, OS install, virus removal & data recovery.",   id: "service"     },
+            { icon: icons.Laptops,      title: "Laptops & Desktops",        desc: "New, refurbished, and custom-built systems for home and business.",    id: "laptops"     },
+            { icon: icons.CCTV,         title: "CCTV Systems",              desc: "Complete surveillance solutions — supply, installation & support.",    id: "cctv"        },
+            { icon: icons.Printers,     title: "Printer Services",          desc: "Printer repair, head reconditioning & laser toner refillings.",       id: "printers"    },
+            { icon: icons.Accessories,  title: "Accessories & Consumables", desc: "Cables, cartridges, ink, and everything your setup needs.",           id: "accessories" },
+            { icon: icons.Networking,   title: "Networking",                desc: "Routers, switches, structured cabling and network setup.",            id: "networking"  },
+            { icon: icons.Peripherals,  title: "Peripherals",               desc: "Keyboards, mice, monitors, headsets and more.",                      id: "peripherals" },
+            { icon: icons.Consumables,  title: "Ink & Toner Refilling",     desc: "On-site refilling park for laser toner and ink cartridges.",         id: "consumables" },
+            { icon: icons.Services,     title: "Repairs & Service",         desc: "Hardware diagnostics, OS install, virus removal & data recovery.",   id: "service"     },
           ].map((item) => (
             <a
               key={item.id}
@@ -166,7 +250,7 @@ function Home() {
               rel="noopener noreferrer"
               className="bg-white dark:bg-dark-card border border-gray-100 dark:border-blue-900 rounded-2xl p-5 hover:shadow-xl hover:-translate-y-1 hover:border-primary dark:hover:border-blue-400 transition-all duration-300 group"
             >
-              <span className="text-4xl">{item.icon}</span>
+              <span className="text-primary dark:text-blue-400">{item.icon}</span>
               <h3 className="mt-3 font-bold text-gray-800 dark:text-white group-hover:text-primary dark:group-hover:text-blue-300 transition">
                 {item.title}
               </h3>
@@ -202,24 +286,27 @@ function Home() {
       </section>
 
       {/* ── FOOTER ── */}
-      <footer id="contact" className="bg-white dark:bg-dark-card border-t border-gray-100 dark:border-blue-900 py-12 px-4">
+      <footer
+        id="contact"
+        className="bg-white dark:bg-dark-card border-t border-gray-100 dark:border-blue-900 py-12 px-4"
+      >
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
 
           <div>
-            <p className="text-xs font-bold text-primary dark:text-blue-300 uppercase tracking-widest mb-3">Company |</p>
+            <p className="text-xs font-bold text-gray-800 dark:text-gray-200 uppercase tracking-widest mb-3">Company |</p>
             <div className="flex items-center gap-3 mb-3">
               <img src={logo} alt="Logo" className="h-10 w-10 object-contain bg-gray-50 dark:bg-dark-bg rounded-xl p-1" />
-              <span className="font-black text-gray-800 dark:text-white text-sm">Phoenix Marketers</span>
+              <span className="font-bold text-gray-900 dark:text-gray-100 text-sm">Phoenix Marketers</span>
             </div>
-            <p className="text-sm text-gray-400 dark:text-gray-400">Laptops | Desktops | CCTV | Accessories | Refilling Park</p>
-            <p className="mt-2 text-sm text-gray-300 dark:text-gray-500">Tuticorin, India</p>
+            <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">Laptops | Desktops | CCTV | Accessories | Refilling Park</p>
+            <p className="mt-2 text-sm font-semibold text-gray-600 dark:text-gray-400">Tuticorin, India</p>
           </div>
 
           <div>
-            <p className="text-xs font-bold text-primary dark:text-blue-300 uppercase tracking-widest mb-3">Address |</p>
+            <p className="text-xs font-bold text-gray-800 dark:text-gray-200 uppercase tracking-widest mb-3">Address |</p>
             <div className="flex items-start gap-2">
               <span>📍</span>
-              <p className="text-sm text-gray-500 dark:text-gray-300 leading-relaxed">
+              <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 leading-relaxed">
                 16/3, Chidambara Nagar<br />
                 Main Road, Opp. CSI Church<br />
                 Tuticorin — 628 008.
@@ -229,25 +316,25 @@ function Home() {
               href="https://maps.google.com/?q=16/3+Chidambara+Nagar+Main+Road+Tuticorin"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-3 inline-block text-xs font-semibold text-primary dark:text-blue-300 hover:underline"
+              className="mt-3 inline-block text-xs font-semibold text-gray-800 dark:text-gray-200 hover:underline"
             >
               📌 View on Google Maps →
             </a>
           </div>
 
           <div>
-            <p className="text-xs font-bold text-primary dark:text-blue-300 uppercase tracking-widest mb-3">Proprietorship Details</p>
-            <p className="text-base font-bold text-gray-800 dark:text-white">S.W. John Mohan</p>
-            <p className="text-sm text-gray-400 dark:text-gray-400 mt-0.5">B.Sc., HDCM., PGDCA., MBA.</p>
+            <p className="text-xs font-bold text-gray-800 dark:text-gray-200 uppercase tracking-widest mb-3">Proprietorship Details</p>
+            <p className="text-base font-bold text-gray-900 dark:text-gray-100">S.W. John Mohan</p>
+            <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 mt-0.5">B.Sc., HDCM., PGDCA., MBA.</p>
           </div>
 
           <div>
-            <p className="text-xs font-bold text-primary dark:text-blue-300 uppercase tracking-widest mb-3">Contact</p>
-            <div className="space-y-2 text-sm text-gray-500 dark:text-gray-300">
-              <a href="tel:+919500288164" className="flex items-center gap-2 hover:text-primary dark:hover:text-blue-300 transition">
+            <p className="text-xs font-bold text-gray-800 dark:text-gray-200 uppercase tracking-widest mb-3">Contact</p>
+            <div className="space-y-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
+              <a href="tel:+919500288164" className="flex items-center gap-2 hover:text-gray-900 dark:hover:text-gray-100 transition">
                 📞 +91-95002 88164
               </a>
-              <a href="tel:+919842125620" className="flex items-center gap-2 hover:text-primary dark:hover:text-blue-300 transition">
+              <a href="tel:+919842125620" className="flex items-center gap-2 hover:text-gray-900 dark:hover:text-gray-100 transition">
                 📞 +91-98421 25620
               </a>
               <a
@@ -258,24 +345,27 @@ function Home() {
               >
                 💬 WhatsApp Us
               </a>
-              <a href="mailto:phoenixmarketers@gmail.com" className="flex items-center gap-2 hover:text-primary dark:hover:text-blue-300 transition break-all">
+              <a href="mailto:phoenixmarketers@gmail.com" className="flex items-center gap-2 hover:text-gray-900 dark:hover:text-gray-100 transition break-all">
                 ✉️ phoenixmarketers@gmail.com
               </a>
             </div>
             <div className="mt-4">
-              <p className="text-xs font-bold text-gray-300 dark:text-gray-500 uppercase tracking-widest mb-1">Hours |</p>
-              <p className="text-sm text-gray-500 dark:text-gray-300">Mon–Sat, 9AM–7PM</p>
+              <p className="text-xs font-bold text-gray-800 dark:text-gray-200 uppercase tracking-widest mb-1">Hours |</p>
+              <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">Mon–Sat, 9AM–7PM</p>
             </div>
           </div>
 
         </div>
 
         <div className="max-w-6xl mx-auto mt-10 pt-6 border-t border-gray-100 dark:border-blue-900 text-center">
-          <p className="text-xs text-gray-300 dark:text-gray-500">
+          <p className="text-xs font-semibold text-gray-700 dark:text-gray-400">
             © 2003–2026 Phoenix Computers. All Rights Reserved.
           </p>
         </div>
       </footer>
+
+      {/* ── BOTTOM FLOATING PILL NAV ── */}
+      <BottomNav />
 
     </main>
   );
