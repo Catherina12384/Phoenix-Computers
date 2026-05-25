@@ -16,6 +16,7 @@ import ProductCarousel from "../components/ProductCarousel";
 import CatalogueCard from "../components/CatalogueCard";
 import Footer from "../components/Footer";
 import BottomNav from "../components/BottomNav";
+import DealerScroller from "../components/DealerScroller";
 
 function Home() {
 
@@ -71,6 +72,7 @@ function Home() {
 
       {/* ── WHAT WE OFFER ── */}
       <CatalogueCard/>
+      <DealerScroller/>
 
       {/* ── ABOUT STRIP ── */}
       <section className="bg-primary dark:bg-dark-nav py-12 px-4">
